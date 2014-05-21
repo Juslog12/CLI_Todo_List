@@ -112,13 +112,26 @@ function readtheFile($filename, $bytes = 100) {
 	return $array;
 }
 
+function savefile($filename, $items) {
+		if(file_exists($filename)) {
+			echo "File already exist. Would you like to overwrite it? (Y or N)\n";
+			$input = get_input(TRUE);
+			if($input = 'Y'){
+				$handle = fopen($filename, 'w');
+				$list_items =implode($items);
+				fwrite($handle, $list_items);
+				fclose($handle);
+				echo "$filename was saved succesfully.\n";
+			}	
+		}
+	}
 // The loop!
 do {
     // Iterate through list items
 	echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (S)ort items, (O)pen file, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort items, (O)pen file, s(A)ve, (Q)uit : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -139,6 +152,10 @@ do {
         echo 'Enter filename: ';
         $filename = get_input();
         $items = readtheFile($filename, $bytes = 100);
+    }elseif ($input == 'A') {
+    	echo "Chose a path to save the file:";
+    	$filename = get_input();
+    	savefile($filename,$items); 
     } elseif($input == 'F') {
 		array_shift($items);
 	} elseif($input == 'L') {
