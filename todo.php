@@ -116,12 +116,14 @@ function savefile($filename, $items) {
 		if(file_exists($filename)) {
 			echo "File already exist. Would you like to overwrite it? (Y or N)\n";
 			$input = get_input(TRUE);
-			if($input = 'Y'){
+			if($input == 'Y'){
 				$handle = fopen($filename, 'w');
 				$list_items =implode($items);
 				fwrite($handle, $list_items);
 				fclose($handle);
 				echo "$filename was saved succesfully.\n";
+			} elseif($input = 'N') {
+				//echo "Please select a new file name.\n";
 			}	
 		}
 	}
@@ -149,11 +151,12 @@ do {
        $input = get_input();  
     } elseif ($input == 'O') {
         // Remove which item?
-        echo 'Enter filename: ';
+        echo 'Please enter a filename: ';
         $filename = get_input();
         $items = readtheFile($filename, $bytes = 100);
     }elseif ($input == 'A') {
-    	echo "Chose a path to save the file:";
+    	//Save file code
+    	echo 'Please enter a filename: ';
     	$filename = get_input();
     	savefile($filename,$items); 
     } elseif($input == 'F') {
