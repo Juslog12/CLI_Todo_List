@@ -90,19 +90,26 @@ function new_item_placement($items)
 }
 
 function readtheFile($filename, $bytes = 100) {
-	filename = data/list.txt
-	$contents = '';
+	
+	//var_dump($filename);
+
+	if (empty($filename)) {
+		$filename = './data/list.txt';
+		//var_dump($filename);
+
+	}
+	
+	$contents = ''; 
 	if (is_readable($filename)) {
 		$handle = fopen($filename, 'r');
 
-		while(!feof($handle)){
-			$contents .= fread($handle, $bytes);
+		$contents = trim(fread($handle, $bytes));
+		$array = explode(PHP_EOL, $contents);
 
-			sleep(1);
-		}
 		fclose($handle);
 	}
-	return $contents;
+	//var_dump($array);
+	return $array;
 }
 
 // The loop!
@@ -130,8 +137,8 @@ do {
     } elseif ($input == 'O') {
         // Remove which item?
         echo 'Enter filename: ';
-        // Get array key
-       $input = get_input();  
+        $filename = get_input();
+        $items = readtheFile($filename, $bytes = 100);
     } elseif($input == 'F') {
 		array_shift($items);
 	} elseif($input == 'L') {
