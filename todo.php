@@ -89,13 +89,29 @@ function new_item_placement($items)
 	return $items;
 }
 
+function readtheFile($filename, $bytes = 100) {
+	filename = data/list.txt
+	$contents = '';
+	if (is_readable($filename)) {
+		$handle = fopen($filename, 'r');
+
+		while(!feof($handle)){
+			$contents .= fread($handle, $bytes);
+
+			sleep(1);
+		}
+		fclose($handle);
+	}
+	return $contents;
+}
+
 // The loop!
 do {
     // Iterate through list items
 	echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (S)ort items, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort items, (O)pen file, (Q)uit : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -110,7 +126,12 @@ do {
         // Remove which item?
         echo 'Enter item number to remove: ';
         // Get array key
-       $input = get_input();   
+       $input = get_input();  
+    } elseif ($input == 'O') {
+        // Remove which item?
+        echo 'Enter filename: ';
+        // Get array key
+       $input = get_input();  
     } elseif($input == 'F') {
 		array_shift($items);
 	} elseif($input == 'L') {
